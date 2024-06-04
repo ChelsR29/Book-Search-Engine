@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
 import { useMutation } from '@apollo/client';
 
-import { ADD_USER } from '../graphql/mutations';
+import { ADD_USER } from '../utils/mutations';
 import Auth from '../utils/auth';
 
 const SignupForm = () => {
@@ -55,7 +55,7 @@ const SignupForm = () => {
           <Form.Label htmlFor='username'>Username</Form.Label>
           <Form.Control
             type='text'
-            placeholder='Your username'
+            id='username' // Added id attribute here
             name='username'
             onChange={handleInputChange}
             value={userFormData.username}
@@ -68,7 +68,7 @@ const SignupForm = () => {
           <Form.Label htmlFor='email'>Email</Form.Label>
           <Form.Control
             type='email'
-            placeholder='Your email address'
+            id='email' // Added id attribute here
             name='email'
             onChange={handleInputChange}
             value={userFormData.email}
@@ -81,7 +81,7 @@ const SignupForm = () => {
           <Form.Label htmlFor='password'>Password</Form.Label>
           <Form.Control
             type='password'
-            placeholder='Your password'
+            id='password' // Added id attribute here
             name='password'
             onChange={handleInputChange}
             value={userFormData.password}

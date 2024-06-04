@@ -1,11 +1,12 @@
 const { User } = require('../models');
-const { signToken, AuthenticationError } = require('../utils/auth');
+const { AuthenticationError, signToken } = require('../utils/auth');
 
 const resolvers = {
   Query: {
     me: async (parent, args, context) => {
       if (context.user) {
-        return User.findOne({ _id: context.user._id }).populate('savedBooks');
+        const userData = await User.findOne({ _id: context.user._id }).populate('savedBooks');
+        return userData;
       }
       throw new AuthenticationError('Not logged in');
     },

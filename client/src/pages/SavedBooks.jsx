@@ -1,4 +1,4 @@
-import React from 'react';
+/* eslint-disable react/no-unknown-property */
 import { useQuery, useMutation } from '@apollo/client';
 import {
   Container,
@@ -8,8 +8,8 @@ import {
   Col
 } from 'react-bootstrap';
 
-import { GET_ME } from '../graphql/queries';
-import { REMOVE_BOOK } from '../graphql/mutations';
+import { GET_ME } from '../utils/queries';
+import { REMOVE_BOOK } from '../utils/mutations';
 import Auth from '../utils/auth';
 import { removeBookId } from '../utils/localStorage';
 
@@ -29,7 +29,7 @@ const SavedBooks = () => {
         variables: { bookId }
       });
       removeBookId(bookId);
-      
+
     } catch (err) {
       console.error(err);
     }
