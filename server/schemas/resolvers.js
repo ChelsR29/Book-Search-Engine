@@ -1,5 +1,6 @@
 const { User } = require('../models');
-const { AuthenticationError, signToken } = require('../utils/auth');
+const { AuthenticationError } = require('@apollo/server/errors'); // Update this
+const { signToken } = require('../utils/auth'); // Keep signToken here if it’s defined in utils/auth
 
 const resolvers = {
   Query: {
@@ -36,15 +37,21 @@ const resolvers = {
     },
     saveBook: async (parent, { book }, context) => {
       if (context.user) {
-        const updatedUser = await User.findByIdAndUpdate(
-          context.user._id,
-          { $addToSet: { savedBooks: book } },
-          { new: true, runValidators: true }
-        ).populate('savedBooks');
-
-        return updatedUser;
+        try {
+          const updatedUser = await User.findByIdAndUpdate(
+            context.user._id,
+            { $addToSet: { savedBooks: book } }, // $addToSet ensures no duplicates
+            { new: true, runValidators: true }
+          ).populate('savedBooks');
+    
+          return updatedUser;
+        } catch (err) {
+          console.error('Error saving book:', err.message);
+          throw new Error('Failed to save book');
+        }
       }
       throw new AuthenticationError('Not logged in');
+    
     },
     removeBook: async (parent, { bookId }, context) => {
       if (context.user) {
@@ -62,3 +69,4 @@ const resolvers = {
 };
 
 module.exports = resolvers;
+

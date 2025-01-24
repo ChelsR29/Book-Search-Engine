@@ -17,8 +17,8 @@ const typeDefs = `
   }
 
   type Auth {
-    token: String!
-    user: User!
+    token: ID!
+    user: User
   }
 
   input BookInput {
